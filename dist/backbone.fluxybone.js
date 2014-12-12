@@ -1,3 +1,13 @@
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['backbone', 'underscore'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('backbone'), require('underscore'));
+  } else {
+    root.Backbone.fluxybone = factory(root.Backbone, root._);
+  }
+}(this, function(Backbone, _) {
+FluxyBone = {};
 var Dispatcher =  FluxyBone.Dispatcher = function Dispatcher(actions) {
 
 	if(actions) {
@@ -112,3 +122,6 @@ Dispatcher.prototype = {
 	}
 
 };
+Backbone.FluxyBone = FluxyBone;
+return Backbone.fluxybone;
+}));

@@ -4,7 +4,8 @@
   "description": "Facebook's Flux architecture for Backbone",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build"
   },
   "keywords": [
     "flux",
@@ -12,5 +13,16 @@
     "backbonejs"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "backbone": "^1.1.2",
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.4.2",
+    "gulp-uglify": "^1.0.2",
+    "gulp-umd": "^0.1.3"
+  }
 }

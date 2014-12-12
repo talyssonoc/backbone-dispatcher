@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Todo</title>
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="../bower_components/backbone/backbone.js"></script>
+	<script type="text/javascript" src="todo.js"></script>
+	<script src="../dist/backbone.fluxybone.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+	
+	<style>
+		
+		h3 {
+			margin: 0;
+		}
+
+		.app {
+			height: 300px;
+			width: 300px;
+			border: 1px solid black;
+			margin: 5px;
+			padding: 5px;
+			display: inline-block;
+			float: left;
+		}
+
+		div.test {
+			clear: both;
+		}
+
+	</style>
+
+</head>
+<body>
+	
+	<div class="test">
+		<div id="app" class="app">
+			<h3>Todo</h3>
+			<ul class="todos"></ul>
+			<button class="add">+</button>
+		</div>
+	</div>
+	
+
+</body>
+</html>

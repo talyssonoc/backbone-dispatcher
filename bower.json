@@ -1,0 +1,27 @@
+{
+  "name": "fluxybone",
+  "version": "0.0.1",
+  "authors": [
+    "talyssonoc <talyssonoc@gmail.com>"
+  ],
+  "description": "Facebook's Flux architecture for Backbone",
+  "main": "src/backbone.fluxybone.js",
+  "keywords": [
+    "flux",
+    "backbone",
+    "backbonejs"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.7.0",
+    "backbone": "~1.1.2"
+  }
+}
