@@ -1,0 +1,16 @@
+{
+  "name": "fluxybone",
+  "version": "0.0.1",
+  "description": "Facebook's Flux architecture for Backbone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "flux",
+    "backbone",
+    "backbonejs"
+  ],
+  "author": "",
+  "license": "MIT"
+}
