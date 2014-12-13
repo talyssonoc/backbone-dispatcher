@@ -12,6 +12,20 @@ instead of ReactJS.
 
 ```
 
+## Installing
+
+Via npm
+
+```sh
+	npm install backbone-dispatcher --save
+```
+
+or via Bower
+
+```sh
+	bower install backbone-dispatcher --save
+```
+
 ## Usage
 
 ```js
