@@ -8,43 +8,80 @@
 	<script type="text/javascript" src="../bower_components/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="../bower_components/backbone/backbone.js"></script>
 	<script type="text/javascript" src="todo.js"></script>
-	<script src="../dist/backbone.fluxybone.js"></script>
+	<script src="../dist/backbone.dispatcher.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 
-	
 	<style>
 		
+		body, html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			width: 100%;
+		}
+
 		h3 {
 			margin: 0;
+			text-align: center;
 		}
 
-		.app {
+		#app {
 			height: 300px;
 			width: 300px;
-			border: 1px solid black;
-			margin: 5px;
+
+			border: 1px solid rgba(150, 150, 150, 0.5);
+			margin: auto;
 			padding: 5px;
-			display: inline-block;
-			float: left;
+			margin-top: 30px;
+			border-radius: 5px;
+			box-shadow: 1px 1px 1px 1px rgba(150, 150, 150, 0.5); 
+			font-family: arial;
+			overflow: auto;
 		}
 
-		div.test {
+		#app button {
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			padding: 2px 8px;
+		}
+
+		#todos {
+			margin: 3px 0px;
+		}
+
+		.todo {
+			background-color: #ddd;
+			padding: 5px;
+			margin-bottom: 3px;
+			border-radius: 3px;
+		}
+
+		.remove {
+			display: inline-block;
+			height: 18px;
+			width: 16px;
+			background: red;
+			color: white;
+			font-weight: bold;
+			text-align: center;
+			border-radius: 3px;
+			cursor: pointer;
+			float: right;
 			clear: both;
+		}
+
+		.checked {
+			text-decoration: line-through;
 		}
 
 	</style>
 
 </head>
 <body>
-	
-	<div class="test">
-		<div id="app" class="app">
-			<h3>Todo</h3>
-			<ul class="todos"></ul>
-			<button class="add">+</button>
-		</div>
+	<div id="app">
+		<h3>Todo app</h3>
+		<div id="todos"></div>
+		<button id="add">+</button>
 	</div>
-	
-
 </body>
 </html>

@@ -1,24 +1,31 @@
 {
-  "name": "fluxybone",
+  "name": "backbone-dispatcher",
   "version": "0.0.1",
   "authors": [
     "talyssonoc <talyssonoc@gmail.com>"
   ],
-  "description": "Facebook's Flux architecture for Backbone",
-  "main": "src/backbone.fluxybone.js",
+  "description": "A Flux dispatcher for using with Backbone",
+  "main": "dist/backbone.dispatcher.js",
   "keywords": [
     "flux",
     "backbone",
     "backbonejs"
   ],
   "license": "MIT",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/talyssonoc/backbone-dispatcher"
+  },
+  "bugs": {
+    "url": "https://github.com/talyssonoc/backbone-dispatcher/issues"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "example"
   ],
   "dependencies": {
     "underscore": "~1.7.0",

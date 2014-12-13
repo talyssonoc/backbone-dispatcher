@@ -1,21 +1,11 @@
-(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define(['backbone', 'underscore'], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory(require('backbone'), require('underscore'));
-  } else {
-    root.Backbone.fluxybone = factory(root.Backbone, root._);
-  }
-}(this, function(Backbone, _) {
-FluxyBone = {};
-var Dispatcher =  FluxyBone.Dispatcher = function Dispatcher(actions) {
+var Dispatcher =  function Dispatcher(options) {
 
-	if(actions) {
-		if(typeof actions == 'string') {
-			this.createAction(actions);
+	if(options && options.actions) {
+		if(typeof options.actions == 'string') {
+			this.createAction(options.actions);
 		}
 		else {	
-			this.createActions(actions);
+			this.createActions(options.actions);
 		}
 	}
 
@@ -26,9 +16,14 @@ var Dispatcher =  FluxyBone.Dispatcher = function Dispatcher(actions) {
 
 	_.extend(this._actions, Backbone.Events);
 
+	this.initialize.apply(this, arguments);
 };
 
+Dispatcher.extend = Backbone.Model.extend;
+
 Dispatcher.prototype = {
+
+	initialize: function initialize() {},
 
 	_prepareAction: function _prepareAction(name, callbacks) {
 		var action = {};
@@ -64,24 +59,20 @@ Dispatcher.prototype = {
 		var dispatch,
 			self = this;
 
-		var emit = function() {
-			return function(payload) {
-				self._actions.trigger(action.name, payload);
-			};
+		var emit =  function(payload) {
+			self.dispatch(action.name, payload);
 		};
 
-		var beforeEmit = function() {
-			return function(payload) {
-				action.beforeEmit(payload, function(newPayload) {
-					emit(newPayload);
-				});
-			}
+		var beforeEmit = function(payload) {
+			action.beforeEmit(payload, function(newPayload) {
+				emit(newPayload);
+			});
 		};
 
 		var shouldEmit = function(fn) {
 			return function(payload) {
 				if(action.shouldEmit(payload)) {
-					fn()(payload);
+					fn(payload);
 				}
 			};
 		};
@@ -95,10 +86,10 @@ Dispatcher.prototype = {
 			}
 		}
 		else if(action.beforeEmit) {
-			dispatch = beforeEmit();
+			dispatch = beforeEmit;
 		}
 		else {
-			dispatch = emit();
+			dispatch = emit;
 		}
 
 		Object.defineProperty(this, action.name, {
@@ -119,9 +110,10 @@ Dispatcher.prototype = {
 
 		this._actions.on(action, listener[method].bind(listener));
 
+	},
+
+	dispatch: function dispatch(actionName, payload) {
+		this._actions.trigger(actionName, payload);
 	}
 
 };
-Backbone.FluxyBone = FluxyBone;
-return Backbone.fluxybone;
-}));

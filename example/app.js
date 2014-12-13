@@ -1,20 +1,22 @@
 $(function() {
-	var TodoAppBackboneReflux = Backbone.View.extend({
+	var TodoAppBackbone = Backbone.View.extend({
 
 		events: {
-			'click .add': 'create'
+			'click #add': 'create'
 		},
 
 		initialize: function() {
 			this.store = new TodoCollection();
 
-			this.dispatcher = new Backbone.FluxyBone.Dispatcher();
+			var TodoDispatcher = Backbone.Dispatcher.extend({});
 
-			this.dispatcher.createActions([
-				'create',
-				'toggle',
-				'remove'
-			]);
+			this.dispatcher = new TodoDispatcher({
+				actions: [
+					'create',
+					'toggle',
+					'remove'
+				]
+			});
 
 			this.dispatcher.register('create', this.store, 'createTodo');
 			this.dispatcher.register('toggle', this.store, 'toggleTodo');
@@ -29,7 +31,7 @@ $(function() {
 
 		render: function() {
 
-			var todosElement = this.$el.find('.todos');
+			var todosElement = this.$el.find('#todos');
 
 			todosElement.empty();
 
@@ -44,9 +46,10 @@ $(function() {
 	});
 
 	var TodoView = Backbone.View.extend({
-		tagName: 'li',
+		tagName: 'div',
+		className: 'todo',
 
-		template: _.template('<input type=\'checkbox\' <% if(complete) { print(\'checked="checked"\'); } %>/><span><%= title %></span> <span class="remove">x</span>'),
+		template: _.template('<input type=\'checkbox\' <% if(complete) { print(\'checked="checked"\'); } %>/><span class="<% if(complete) { print(\'checked\'); }%>"><%= title %></span> <span class="remove">x</span>'),
 
 		events: {
 			'click input': 'toggle',
@@ -58,11 +61,12 @@ $(function() {
 		},
 
 		toggle: function() {
-			backboneAppReflux.dispatcher.toggle(this.model);
+			backboneApp.dispatcher.toggle(this.model);
+			this.render();
 		},
 
 		remove: function() {
-			backboneAppReflux.dispatcher.remove(this.model)
+			backboneApp.dispatcher.remove(this.model)
 		},
 
 		render: function () {
@@ -72,9 +76,9 @@ $(function() {
 		}
 	});
 
-	var backboneAppReflux = new TodoAppBackboneReflux({
+	var backboneApp = new TodoAppBackbone({
 		el: document.getElementById('app')
 	});
 
-	backboneAppReflux.render();
+	backboneApp.render();
 });

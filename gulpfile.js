@@ -12,12 +12,18 @@ gulp.task('clean', function () {
 
 gulp.task('build', ['clean'], function() {  
   return gulp.src([
-  					'src/fluxybone.core.js',
-  					'src/fluxybone.dispatcher.js',
-  					'src/fluxybone.footer.js'
+  					'src/dispatcher.js'
   				])
-    .pipe(concat('backbone.fluxybone.js'))
+    .pipe(concat('backbone.dispatcher.js'))
     .pipe(umd({
+        exports: function(file) {
+            return 'Dispatcher';
+        },
+
+        namespace: function(file) {
+            return 'Backbone.Dispatcher';
+        },
+
     	dependencies: function() {
     		return [
     			{
@@ -38,7 +44,7 @@ gulp.task('build', ['clean'], function() {
     	}
     }))
     .pipe(gulp.dest('dist'))
-    .pipe(rename('backbone.fluxybone.min.js'))
+    .pipe(rename('backbone.dispatcher.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist'))
 });
