@@ -1,7 +1,9 @@
+var previousDispatcher = root.Dispatcher;
+
 var Dispatcher =  function Dispatcher(options) {
 
 	if(options && options.actions) {
-		if(typeof options.actions == 'string') {
+		if(typeof options.actions === 'string') {
 			this.createAction(options.actions);
 		}
 		else {	
@@ -20,6 +22,13 @@ var Dispatcher =  function Dispatcher(options) {
 };
 
 Dispatcher.extend = Backbone.Model.extend;
+
+Dispatcher.VERSION = '0.0.2';
+
+Dispatcher.noConflict = function noConflict() {
+	root.Dispatcher = previousDispatcher;
+	return this;
+};
 
 Dispatcher.prototype = {
 
@@ -110,6 +119,14 @@ Dispatcher.prototype = {
 
 		this._actions.on(action, listener[method].bind(listener));
 
+	},
+
+	registerStore: function registerStore(actions, listener, methods) {
+		methods = methods || actions;
+
+		for(var i = 0; i < actions.length; i++) {
+			this.register(actions[i], listener, methods[i]);
+		}
 	},
 
 	dispatch: function dispatch(actionName, payload) {

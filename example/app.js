@@ -18,9 +18,13 @@ $(function() {
 				]
 			});
 
-			this.dispatcher.register('create', this.store, 'createTodo');
-			this.dispatcher.register('toggle', this.store, 'toggleTodo');
-			this.dispatcher.register('remove', this.store, 'removeTodo');
+			// this.dispatcher.register('create', this.store, 'createTodo');
+			// this.dispatcher.register('toggle', this.store, 'toggleTodo');
+			// this.dispatcher.register('remove', this.store, 'removeTodo');
+
+			this.dispatcher.registerStore(['create', 'toggle', 'remove'],
+									this.store,
+									['createTodo', 'toggleTodo', 'removeTodo']);
 
 			this.listenTo(this.store, 'change', this.render);
 		},

@@ -51,11 +51,15 @@ or via Bower
 
 ## API
 
-* `extend([options])`: Static method, let's you extend the Dispatcher (check the examples below)
-* `createAction(actionName/actionObject[, beforeEmit/actionCallbacks])`: Instance method, creates a new action
-* `createActions(arrayOfActions)`: Instance method, receive an array of methods that are passed to `createAction()`
-* `dispatch(actionName, payload)`: Instance method, dispatches an action
-* `<actionName>(payload)`: Instance method, dispatches the action 'actionName'
+* `extend([options])`: Static method, let's you extend the Dispatcher (check the examples below).
+* `createAction(actionName/actionObject[, beforeEmit/actionCallbacks])`: Instance method, creates a new action. Callbacks:
+	* `shouldEmit(payload)`: Returns true if should emit, and false if not.
+	* `beforeEmit(payload, next)`: Run right after `shouldEmit`, pass the changed payload as parameter to next.
+* `createActions(arrayOfActions)`: Instance method, receive an array of methods that are passed to `createAction()`.
+* `dispatch(actionName, payload)`: Instance method, dispatches an action.
+* `<actionName>(payload)`: Instance method, dispatches the action 'actionName'.
+* `register(actionName, model/collection[, methodName])`: Makes the model/collections listen to `actionName`, and will call model.methodName(payload)/collection.methodName(payload) when dispatched. If `methodName` is not passed, it will be the same as `actionName`.
+* `registerStore(actionNamesArray, model/collection[, methodNamesArray])`: Calls `register` (see the line above) for each pair action/method.
 
 ## Examples
 
