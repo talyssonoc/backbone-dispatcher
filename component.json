@@ -1,0 +1,14 @@
+{
+  "name"          : "backbone-dispatcher",
+  "version"       : "0.0.2",
+  "description"   : "A Flux dispatcher for using with Backbone",
+  "keywords"      : ["flux", "backbone", "backbonejs"],
+  "repo"          : "talyssonoc/backbone-dispatcher",
+  "dependencies"  : {
+    "jashkenas/backbone": "*",
+    "jashkenas/underscore"  : "*"
+  },
+  "main"          : "dist/backbone.dispatcher.js",
+  "scripts"       : ["dist/backbone.dispatcher.js"],
+  "license"       : "MIT"
+}
