@@ -49,7 +49,8 @@ gulp.task('build', ['clean'], function() {
                     param: '_'
                 }
             ]
-        }
+        },
+        template: path.join(__dirname, '/src/umdTemplate.js')
     }))
     .pipe(gulp.dest('dist'))
     .pipe(rename('backbone.dispatcher.min.js'))

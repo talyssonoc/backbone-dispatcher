@@ -1,12 +1,15 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['backbone', 'underscore'], factory);
+    define(['backbone', 'underscore'], function(Backbone, _) {
+    	return (root.Backbone.Dispatcher = factory(Backbone, _));
+    });
   } else if (typeof exports === 'object') {
     module.exports = factory(require('backbone'), require('underscore'));
   } else {
     root.Backbone.Dispatcher = factory(root.Backbone, root._);
   }
 }(this, function(Backbone, _) {
+'use strict';
 var previousDispatcher = root.Dispatcher;
 
 var Dispatcher =  function Dispatcher(options) {
