@@ -1,6 +1,6 @@
 {
   "name": "backbone-dispatcher",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Flux dispatcher for using with Backbone",
   "main": "dist/backbone.dispatcher.js",
   "scripts": {

@@ -23,7 +23,7 @@ var Dispatcher =  function Dispatcher(options) {
 
 Dispatcher.extend = Backbone.Model.extend;
 
-Dispatcher.VERSION = '0.0.2';
+Dispatcher.VERSION = '0.0.4';
 
 Dispatcher.noConflict = function noConflict() {
 	root.Dispatcher = previousDispatcher;
