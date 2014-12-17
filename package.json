@@ -1,6 +1,6 @@
 {
   "name": "backbone-dispatcher",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Flux dispatcher for using with Backbone",
   "main": "dist/backbone.dispatcher.js",
   "scripts": {
@@ -12,7 +12,13 @@
     "backbone",
     "backbonejs"
   ],
-  "author": "",
+  "authors": [
+    "talyssonoc <talyssonoc@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/talyssonoc/backbone-dispatcher"
+  },
   "license": "MIT",
   "dependencies": {
     "backbone": "^1.1.2",
