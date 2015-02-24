@@ -22,15 +22,15 @@
   "license": "MIT",
   "dependencies": {
     "backbone": "^1.1.2",
-    "underscore": "^1.7.0"
+    "underscore": "^1.8.2"
   },
   "devDependencies": {
-    "gulp": "^3.8.10",
+    "gulp": "^3.8.11",
     "gulp-clean": "^0.3.1",
-    "gulp-concat": "^2.4.2",
-    "gulp-jshint": "^1.9.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-jshint": "^1.9.2",
     "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^1.0.2",
+    "gulp-uglify": "^1.1.0",
     "gulp-umd": "^0.1.3"
   }
 }
