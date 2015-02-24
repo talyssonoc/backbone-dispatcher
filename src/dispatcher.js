@@ -1,5 +1,3 @@
-var previousDispatcher = root.Dispatcher;
-
 var Dispatcher =  function Dispatcher(options) {
 
 	if(options && options.actions) {
@@ -23,12 +21,7 @@ var Dispatcher =  function Dispatcher(options) {
 
 Dispatcher.extend = Backbone.Model.extend;
 
-Dispatcher.VERSION = '0.0.5';
-
-Dispatcher.noConflict = function noConflict() {
-	root.Dispatcher = previousDispatcher;
-	return this;
-};
+Dispatcher.VERSION = '0.0.6';
 
 Dispatcher.prototype = {
 
