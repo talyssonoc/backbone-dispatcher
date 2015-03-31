@@ -1,5 +1,3 @@
-var previousDispatcher = root.Dispatcher;
-
 var Dispatcher =  function Dispatcher(options) {
 
 	if(options && options.actions) {
@@ -23,12 +21,7 @@ var Dispatcher =  function Dispatcher(options) {
 
 Dispatcher.extend = Backbone.Model.extend;
 
-Dispatcher.VERSION = '0.0.5';
-
-Dispatcher.noConflict = function noConflict() {
-	root.Dispatcher = previousDispatcher;
-	return this;
-};
+Dispatcher.VERSION = '0.0.6';
 
 Dispatcher.prototype = {
 
@@ -109,23 +102,35 @@ Dispatcher.prototype = {
 	},
 
 	createActions: function createActions(actions) {
-		for(var a in actions) {
-			this.createAction(actions[a]);
+		var action;
+
+		for (action in actions) {
+			if (actions.hasOwnProperty(action)){
+				this.createAction(actions[action]);
+			}
 		}
 	},
 
 	register: function register(action, listener, method) {
-		method = method || action;
+		if (!listener){
+			throw new Error('The listener is undefined!');
+		}
 
-		this._actions.on(action, listener[method].bind(listener));
+		method = typeof(method) === 'function' ? method : listener[method || action];
+		if (typeof(method) !== 'function') {
+			throw new Error('Cannot register callback `' + method + '` for the action `' + action + '`: the method is ' +
+			'undefined on the provided listener object!');
+		}
 
+		this._actions.on(action, method.bind(listener));
 	},
 
 	registerStore: function registerStore(actions, listener, methods) {
-		methods = methods || actions;
+		var isUniqueCallback = typeof(methods)==='string' || typeof(methods)==='function';
 
-		for(var i = 0; i < actions.length; i++) {
-			this.register(actions[i], listener, methods[i]);
+		methods = methods || actions;
+		for(var i = 0, action; (action = actions[i]); i++) {
+			this.register(action, listener, isUniqueCallback ? methods : methods[i]);
 		}
 	},
 
