@@ -10,7 +10,7 @@
   }
 }(this, function(Backbone, _) {
 'use strict';
-var Dispatcher =  function Dispatcher(options) {
+var Dispatcher = function Dispatcher(options) {
 
 	if(options && options.actions) {
 		if(typeof options.actions === 'string') {
@@ -57,9 +57,7 @@ Dispatcher.prototype = {
 						}
 					}
 				}
-
 			}
-
 		} else {
 			action = name;
 		}
@@ -70,12 +68,11 @@ Dispatcher.prototype = {
 	createAction: function createAction(name, callbacks) {
 		var action = this._prepareAction(name, callbacks);
 
-		var dispatch,
-			self = this;
+		var dispatch;
 
 		var emit =  function(payload) {
-			self.dispatch(action.name, payload);
-		};
+			this.dispatch(action.name, payload);
+		}.bind(this);
 
 		var beforeEmit = function(payload) {
 			action.beforeEmit(payload, function(newPayload) {
@@ -92,6 +89,7 @@ Dispatcher.prototype = {
 		};
 
 		if(action.shouldEmit) {
+
 			if(action.beforeEmit) {
 				dispatch = shouldEmit(beforeEmit);
 			}
@@ -130,8 +128,9 @@ Dispatcher.prototype = {
 
 		method = typeof(method) === 'function' ? method : listener[method || action];
 		if (typeof(method) !== 'function') {
-			throw new Error('Cannot register callback `' + method + '` for the action `' + action + '`: the method is ' +
-			'undefined on the provided listener object!');
+			throw new Error('Cannot register callback `' + method +
+											'` for the action `' + action +
+											'`: the method is undefined on the provided listener object!');
 		}
 
 		this._actions.on(action, method.bind(listener));
