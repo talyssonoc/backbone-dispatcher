@@ -5,9 +5,9 @@ var expect = chai.expect;
 
 describe('Basics', function() {
 
-  var Dispatcher = require('../../dist/backbone.dispatcher'),
-    MyDispatcher,
-    myDispatcher;
+  var Dispatcher = require('../../dist/backbone.dispatcher');
+  var MyDispatcher;
+  var myDispatcher;
 
   beforeEach(function() {
     MyDispatcher = Dispatcher.extend({

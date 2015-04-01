@@ -5,9 +5,9 @@ var expect = chai.expect;
 
 describe('Action creation', function() {
 
-  var Dispatcher = require('../../dist/backbone.dispatcher'),
-      MyDispatcher = Dispatcher.extend({}),
-      myDispatcher;
+  var Dispatcher = require('../../dist/backbone.dispatcher');
+  var MyDispatcher = Dispatcher.extend({});
+  var myDispatcher;
 
   it('should create actions in the instantiation', function() {
     myDispatcher = new MyDispatcher({
