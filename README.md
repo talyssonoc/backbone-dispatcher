@@ -1,5 +1,8 @@
 # Backbone Dispatcher
 
+[![Build Status](https://travis-ci.org/talyssonoc/backbone-dispatcher.svg?branch=master)](https://travis-ci.org/talyssonoc/backbone-dispatcher) 
+[![Code Climate](https://codeclimate.com/github/talyssonoc/backbone-dispatcher/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/backbone-dispatcher) 
+
 Extension for using [Flux](https://facebook.github.io/flux/docs/overview.html#content) architecture with [Backbone](http://backbonejs.org/)
 instead of ReactJS.
 
