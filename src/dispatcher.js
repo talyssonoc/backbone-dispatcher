@@ -59,7 +59,7 @@ Dispatcher.prototype = {
 		var dispatch;
 
 		var emit =  function(payload) {
-			this.dispatch(action.name, payload);
+			this._triggerAction(action.name, payload);
 		}.bind(this);
 
 		var beforeEmit = function(payload) {
@@ -114,7 +114,8 @@ Dispatcher.prototype = {
 			throw new Error('The listener is undefined!');
 		}
 
-		method = typeof(method) === 'function' ? method : listener[method || action];
+		method = (typeof(method) === 'function') ? method : listener[method || action];
+
 		if (typeof(method) !== 'function') {
 			throw new Error('Cannot register callback `' + method +
 											'` for the action `' + action +
@@ -134,6 +135,14 @@ Dispatcher.prototype = {
 	},
 
 	dispatch: function dispatch(actionName, payload) {
+		if(this.hasOwnProperty(actionName)) {
+			return this[actionName](payload);	
+		}
+
+		throw new Error('There is not an action called `' + actionName + '`');
+	},
+
+	_triggerAction: function _triggerAction(actionName, payload) {
 		this._actions.trigger(actionName, payload);
 	}
 
