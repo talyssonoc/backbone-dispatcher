@@ -10,7 +10,7 @@
   }
 }(this, function(Backbone, _) {
 'use strict';
-var Dispatcher =  function Dispatcher(options) {
+var Dispatcher = function Dispatcher(options) {
 
 	if(options && options.actions) {
 		if(typeof options.actions === 'string') {
@@ -57,9 +57,7 @@ Dispatcher.prototype = {
 						}
 					}
 				}
-
 			}
-
 		} else {
 			action = name;
 		}
@@ -70,12 +68,11 @@ Dispatcher.prototype = {
 	createAction: function createAction(name, callbacks) {
 		var action = this._prepareAction(name, callbacks);
 
-		var dispatch,
-			self = this;
+		var dispatch;
 
 		var emit =  function(payload) {
-			self.dispatch(action.name, payload);
-		};
+			this._triggerAction(action.name, payload);
+		}.bind(this);
 
 		var beforeEmit = function(payload) {
 			action.beforeEmit(payload, function(newPayload) {
@@ -92,6 +89,7 @@ Dispatcher.prototype = {
 		};
 
 		if(action.shouldEmit) {
+
 			if(action.beforeEmit) {
 				dispatch = shouldEmit(beforeEmit);
 			}
@@ -128,34 +126,49 @@ Dispatcher.prototype = {
 			throw new Error('The listener is undefined!');
 		}
 
-		method = typeof(method) === 'function' ? method : listener[method || action];
+		method = (typeof(method) === 'function') ? method : listener[method || action];
+
 		if (typeof(method) !== 'function') {
-			throw new Error('Cannot register callback `' + method + '` for the action `' + action + '`: the method is ' +
-			'undefined on the provided listener object!');
+			throw new Error('Cannot register callback `' + method +
+											'` for the action `' + action +
+											'`: the method is undefined on the provided listener object!');
 		}
 
 		this._actions.on(action, method.bind(listener));
 	},
 
 	registerStore: function registerStore(actions, listener, methods) {
-		var isMethodsArray = Object.prototype.toString.call(methods) === '[object Array]';
+		var isUniqueCallback = (typeof methods) === 'string' || (typeof methods) === 'function';
+		var actionsNames;
 
-		if (isMethodsArray && actions.length !== methods.length) {
-			throw new Error('The number of given callbacks (' + methods.length + ') differs from the actions one (' +
-			actions.length + ')!');
+		if(_.isArray(actions)) {
+			methods = methods || actions;
+		}
+		else if(_.isObject(actions)) {
+			actionsNames = Object.keys(actions);
+			methods = actionsNames.map(function(actionName) {
+				return actions[actionName];
+			});
+			actions = actionsNames;
 		}
 
-		methods = methods || actions;
 		for(var i = 0, action; (action = actions[i]); i++) {
-			this.register(action, listener, isMethodsArray ? methods[i] : methods);
+			this.register(action, listener, isUniqueCallback ? methods : methods[i]);
 		}
 	},
 
 	dispatch: function dispatch(actionName, payload) {
+		if(this.hasOwnProperty(actionName)) {
+			return this[actionName](payload);	
+		}
+
+		throw new Error('There is not an action called `' + actionName + '`');
+	},
+
+	_triggerAction: function _triggerAction(actionName, payload) {
 		this._actions.trigger(actionName, payload);
 	}
 
 };
-
 return Dispatcher;
 }));

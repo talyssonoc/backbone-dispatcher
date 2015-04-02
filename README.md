@@ -1,5 +1,8 @@
 # Backbone Dispatcher
 
+[![Build Status](https://travis-ci.org/talyssonoc/backbone-dispatcher.svg?branch=master)](https://travis-ci.org/talyssonoc/backbone-dispatcher) 
+[![Code Climate](https://codeclimate.com/github/talyssonoc/backbone-dispatcher/badges/gpa.svg)](https://codeclimate.com/github/talyssonoc/backbone-dispatcher) 
+
 Extension for using [Flux](https://facebook.github.io/flux/docs/overview.html#content) architecture with [Backbone](http://backbonejs.org/)
 instead of ReactJS.
 
@@ -34,7 +37,7 @@ or via Bower
 		});
 
 	// It can also be a Collection
-	var MyBackboneModel = require('./MyBackboneModel');
+	var MyModel = require('./MyModel');
 	var myModel = new MyModel();
 
 	// When ACTION_1 is dispatched, pass the payload for myModel.methodName()
@@ -122,24 +125,17 @@ or via Bower
 
 		var MyCollection = require('./MyCollection');
 		var MyModel = require('./MyModel');
-		var MyCollectionView = require('./MyCollectionView');
-		var MyView = require('./MyView');
 
 		var myModel = new MyModel();
 		var myCollection = new MyCollection();
 
-		var myView = new MyView({
-			model: myModel
-		});
-		var myCollectionView = new MyView({
-			collection: myCollection
-		});
 
 		dispatcher.register('action_1', myCollection, 'handleAction1');
-		dispatcher.register('action_1', myCollection, function shinyCallback() {
-			console.log('Hi. This is action_1\'s inline callback! I am bound to myCollection so I can also output things like ' + this.toJSON());
-		});
-		dispatcher.register('action_2', myModel, 'handleAction2');
+		dispatcher.registerStore(['action_2'], myModel, ['handleAction2']);
+		dispatcher.register('action_2', myCollection, function shinyCallback() {
+    			console.log('Hi. This is action_2\'s inline callback! I am bound to myCollection so I can also output things like ' + this.toJSON());
+    		});
+		dispatcher.registerStore({ action_3: 'handleAction3' }, myModel);
 
 		dispatcher.dispatch('action_1', 'Yep, that\'s it, I am the payload');
 		dispatcher.dispatch('action_2', 3);
