@@ -52,6 +52,29 @@ describe('#registerStore', function() {
     });
   });
 
+  it('should trigger a handler passing an object of events and handlers names', function(done) {
+
+    MyModel = Model.extend({
+      actionHandler: function(options) {
+        expect(options.payload).to.be.equal('value 2');
+        options.done();
+      }
+    });
+
+    myModel = new MyModel();
+    myDispatcher = new MyDispatcher();
+    myDispatcher.createAction('action_1');
+
+    myDispatcher.registerStore({
+      'action_1': 'actionHandler'
+    }, myModel);
+
+    myDispatcher.dispatch('action_1', {
+      payload: 'value 2',
+      done: done
+    });
+  });
+
   it('should trigger a handler passing an object of events and handlers', function(done) {
 
     MyModel = Model.extend({});
