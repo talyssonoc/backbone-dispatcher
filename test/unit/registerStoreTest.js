@@ -70,4 +70,20 @@ describe('#registerStore', function() {
       done: done
     });
   });
+
+  it('should throw an error if the number of events and handlers differ', function(){
+
+    MyModel = Model.extend({});
+    myModel = new MyModel();
+
+    myDispatcher = new MyDispatcher();
+    myDispatcher.createAction('action_1');
+    myDispatcher.createAction('action_2');
+    myDispatcher.createAction('action_3');
+
+    var fn = function() {
+      myDispatcher.registerStore(['action_1', 'action_2', 'action_3'], myModel, ['actionHandler1', 'acitonHandler2']);
+    };
+    expect(fn).to.throw(RangeError);
+  });
 });

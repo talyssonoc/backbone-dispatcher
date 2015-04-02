@@ -131,6 +131,9 @@ Dispatcher.prototype = {
 
 		if(_.isArray(actions)) {
 			methods = methods || actions;
+			if (!isUniqueCallback && actions.length !== methods.length) {
+				throw new RangeError('The # of callbacks differs from the # of action names!');
+			}
 		}
 		else if(_.isObject(actions)) {
 			actionsNames = Object.keys(actions);
