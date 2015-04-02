@@ -1,6 +1,6 @@
 {
   "name"          : "backbone-dispatcher",
-  "version"       : "0.0.7",
+  "version"       : "0.0.8",
   "description"   : "A Flux dispatcher for using with Backbone",
   "keywords"      : ["flux", "backbone", "backbonejs"],
   "repo"          : "talyssonoc/backbone-dispatcher",
