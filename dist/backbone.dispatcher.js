@@ -138,11 +138,16 @@ Dispatcher.prototype = {
 	},
 
 	registerStore: function registerStore(actions, listener, methods) {
-		var isUniqueCallback = typeof(methods)==='string' || typeof(methods)==='function';
+		var isMethodsArray = Object.prototype.toString.call(methods) === '[object Array]';
+
+		if (isMethodsArray && actions.length !== methods.length) {
+			throw new Error('The number of given callbacks (' + methods.length + ') differs from the actions one (' +
+			actions.length + ')!');
+		}
 
 		methods = methods || actions;
 		for(var i = 0, action; (action = actions[i]); i++) {
-			this.register(action, listener, isUniqueCallback ? methods : methods[i]);
+			this.register(action, listener, isMethodsArray ? methods[i] : methods);
 		}
 	},
 
@@ -151,5 +156,6 @@ Dispatcher.prototype = {
 	}
 
 };
+
 return Dispatcher;
 }));
