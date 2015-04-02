@@ -58,8 +58,8 @@ or via Bower
 * `createActions(arrayOfActions)`: Instance method, receive an array of methods that are passed to `createAction()`.
 * `dispatch(actionName, payload)`: Instance method, dispatches an action.
 * `<actionName>(payload)`: Instance method, dispatches the action 'actionName'.
-* `register(actionName, model/collection[, methodName])`: Makes the model/collections listen to `actionName`, and will call model.methodName(payload)/collection.methodName(payload) when dispatched. If `methodName` is not passed, it will be the same as `actionName`.
-* `registerStore(actionNamesArray, model/collection[, methodNamesArray])`: Calls `register` (see the line above) for each pair action/method.
+* `register(actionName, model/collection[, callback])`: Makes the model/collections listen to `actionName`, and will call either `callback(payload)` (if callback is a function), or `model[callback](payload)`/`collection[callback](payload)` (if callback is a string corresponding to a model/collection's method name) when dispatched. If `callback` is not passed, it will be the same as `actionName` (so a `model[actionName](payload)` would be executed).
+* `registerStore(actionNamesArray, model/collection[, callbacks])`: Calls `register` (see the line above) for each pair action/callback. `callbacks` can also be a string or a function: in this case, all the actions will be bound to such unique callback.
 
 ## Examples
 
@@ -136,6 +136,9 @@ or via Bower
 		});
 
 		dispatcher.register('action_1', myCollection, 'handleAction1');
+		dispatcher.register('action_1', myCollection, function shinyCallback() {
+			console.log('Hi. This is action_1\'s inline callback! I am bound to myCollection so I can also output things like ' + this.toJSON());
+		});
 		dispatcher.register('action_2', myModel, 'handleAction2');
 
 		dispatcher.dispatch('action_1', 'Yep, that\'s it, I am the payload');
