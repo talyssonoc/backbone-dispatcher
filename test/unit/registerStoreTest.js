@@ -52,6 +52,29 @@ describe('#registerStore', function() {
     });
   });
 
+  it('should trigger a handler passing an object of events and handlers names', function(done) {
+
+    MyModel = Model.extend({
+      actionHandler: function(options) {
+        expect(options.payload).to.be.equal('value 2');
+        options.done();
+      }
+    });
+
+    myModel = new MyModel();
+    myDispatcher = new MyDispatcher();
+    myDispatcher.createAction('action_1');
+
+    myDispatcher.registerStore({
+      'action_1': 'actionHandler'
+    }, myModel);
+
+    myDispatcher.dispatch('action_1', {
+      payload: 'value 2',
+      done: done
+    });
+  });
+
   it('should trigger a handler passing an object of events and handlers', function(done) {
 
     MyModel = Model.extend({});
@@ -69,5 +92,21 @@ describe('#registerStore', function() {
       payload: 2,
       done: done
     });
+  });
+
+  it('should throw an error if the number of events and handlers differ', function(){
+
+    MyModel = Model.extend({});
+    myModel = new MyModel();
+
+    myDispatcher = new MyDispatcher();
+    myDispatcher.createAction('action_1');
+    myDispatcher.createAction('action_2');
+    myDispatcher.createAction('action_3');
+
+    var fn = function() {
+      myDispatcher.registerStore(['action_1', 'action_2', 'action_3'], myModel, ['actionHandler1', 'acitonHandler2']);
+    };
+    expect(fn).to.throw(RangeError);
   });
 });
