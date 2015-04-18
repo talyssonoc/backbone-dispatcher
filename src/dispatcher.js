@@ -21,7 +21,7 @@ var Dispatcher = function Dispatcher(options) {
 
 Dispatcher.extend = Backbone.Model.extend;
 
-Dispatcher.VERSION = '0.0.8';
+Dispatcher.VERSION = '0.0.9';
 
 Dispatcher.prototype = {
 
